@@ -8,25 +8,40 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 1000px;
+            max-width: 1080px;
             margin: 0 auto;
             padding: 20px;
+            background-color: #f7f7f7;
+            color: #333;
         }
         h1, h2 {
             text-align: center;
             margin-bottom: 5px;
+            font-weight: normal;
         }
-        .container {
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        h1 {
+            font-size: 24px;
             margin-top: 20px;
-            overflow: hidden;
+        }
+        h2 {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .main-container {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0;
+            margin-top: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         .header {
             background-color: #f9f9f9;
-            padding: 10px;
-            font-weight: bold;
-            border-bottom: 1px solid #ddd;
+            padding: 10px 15px;
+            font-weight: normal;
+            border-bottom: 1px solid #eee;
+            color: #333;
         }
         .student-info {
             display: flex;
@@ -37,44 +52,48 @@
             min-width: 70%;
         }
         .info-right {
-            flex: 0 0 200px;
+            flex: 0 0 150px;
             padding: 10px;
             text-align: right;
         }
         .info-row {
             display: flex;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #eee;
         }
         .info-label {
             flex: 0 0 150px;
             font-weight: normal;
-            padding: 10px;
+            padding: 10px 15px;
             text-align: right;
             background-color: #fff;
+            color: #666;
         }
         .info-value {
             flex: 1;
-            padding: 10px;
+            padding: 10px 15px;
         }
         .exam-section {
             margin-top: 20px;
         }
         .exam-title {
-            padding: 10px;
+            padding: 10px 15px;
             background-color: #f9f9f9;
-            font-weight: bold;
+            font-weight: normal;
+            border-bottom: 1px solid #eee;
         }
         table {
             width: 100%;
             border-collapse: collapse;
         }
         th, td {
-            padding: 10px;
+            padding: 10px 15px;
             text-align: center;
-            border: 1px solid #ddd;
+            border: 1px solid #eee;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #f9f9f9;
+            font-weight: normal;
+            color: #333;
         }
         .footer {
             text-align: center;
@@ -84,15 +103,16 @@
         }
         .photo {
             max-width: 150px;
-            max-height: 200px;
-            border: 1px solid #ddd;
+            max-height: 170px;
+            border: 1px solid #eee;
             object-fit: cover;
         }
         .chinese-label {
             font-size: 14px;
             color: #666;
-            padding: 5px 10px;
-            border-bottom: 1px solid #ddd;
+            padding: 10px 15px;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #eee;
         }
         .error {
             color: red;
@@ -116,10 +136,10 @@
                 "Nationality": "印度",
                 "Gender": "男",
                 "Exam Center": "印度中印学院",
-                "Ticket No.": "H4240594705000097",
+                "Ticket No.": "H4240594705000097 H8240594705000098",
                 "Certificate No.": "H4240874703",
                 "Test Type": "HSK四级",
-                "Test Time": "22-Jun-24",
+                "Test Time": "Jun 22, 2024",
                 "Photo": "/photo/srk.jpg", // Using placeholder for demo
                 "HSK Listening": "65",
                 "HSK Reading": "62",
@@ -137,11 +157,11 @@
                 "Nationality": "印度",
                 "Gender": "男",
                 "Exam Center": "印度中印学院",
-                "Ticket No.": "H4240594705000099",
+                "Ticket No.": "H4240594705000099 H8240594705000090",
                 "Certificate No.": "H4240874704",
                 "Test Type": "HSK四级",
-                "Test Time": "23-Jun-24",
-                "Photo": "/api/placeholder/150/200", // Using placeholder for demo
+                "Test Time": "Jun 23, 2024",
+                "Photo": "/photo/tom.jpeg", // Using placeholder for demo
                 "HSK Listening": "66",
                 "HSK Reading": "63",
                 "HSK Writing": "62",
@@ -155,9 +175,12 @@
         ];
 
         function displayStudentInfo(student) {
+            // Format the exam date
+            const testDate = student['Test Time'] || '';
+            
             // Generate HTML using student data
             const html = `
-                <div class="container">
+                <div class="main-container">
                     <div class="header">Information of test taker</div>
                     <div class="student-info">
                         <div class="info-left">
@@ -179,7 +202,7 @@
                             </div>
                         </div>
                         <div class="info-right">
-                            <img src="${student['Photo'] || '/api/placeholder/150/200'}" alt="Student Photo" class="photo">
+                            <img src="${student['Photo'] || '/api/placeholder/150/170'}" alt="Student Photo" class="photo">
                         </div>
                     </div>
                     
@@ -206,8 +229,8 @@
                     </div>
                 </div>
                 
-                <div class="container exam-section">
-                    <div class="exam-title">${student['Test Type'] || 'HSK'} (${student['Test Time'] || ''}) 中文水平考试</div>
+                <div class="main-container exam-section">
+                    <div class="exam-title">${student['Test Type'] || 'HSK'}(${testDate})中文水平考试</div>
                     <table>
                         <tr>
                             <th>听力</th>
@@ -226,8 +249,8 @@
                     </table>
                 </div>
                 
-                <div class="container exam-section">
-                    <div class="exam-title">HSKK (${student['HSKK Level'] || '中级'}) (${student['Test Time'] || ''}) 中文水平考试</div>
+                <div class="main-container exam-section">
+                    <div class="exam-title">HSKK (${student['HSKK Level'] || '中级'}) (${testDate})中文水平考试</div>
                     <table>
                         <tr>
                             <th>口试</th>
@@ -275,7 +298,7 @@
                 const ticketNo = urlParams.get('ticket');
                 if (ticketNo) {
                     // Find certificate number by ticket
-                    const student = studentData.find(row => row['Ticket No.'] === ticketNo);
+                    const student = studentData.find(row => row['Ticket No.'].includes(ticketNo));
                     if (student) {
                         certificateNo = student['Certificate No.'];
                     }
