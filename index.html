@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1200">
     <title>中文考试成绩在线验证结果查询</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -10,14 +10,25 @@
         window.jQuery || document.write('<script src="./assets/js/jquery.min.js"><\/script>');
     </script>
     <style>
-        body {
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scrollbar */
+            overflow-y: auto; /* Allow vertical scrolling if needed */
+            box-sizing: border-box;
             font-family: Arial, "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 10px;
             background-color: #fff;
             color: #333;
             line-height: 1.5;
+        }
+
+        body {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px;
+            font-size: 16px;
         }
 
         h2, h4 {
@@ -44,6 +55,8 @@
             padding: 0;
             margin-top: 20px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .active {
@@ -89,6 +102,8 @@
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             padding: 24px;
             border-radius: 6px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .table {
@@ -102,6 +117,7 @@
             border: 1px solid #ddd;
             padding: 8px;
             vertical-align: middle;
+            box-sizing: border-box;
         }
 
         .table th {
@@ -116,14 +132,14 @@
 
         .table img {
             max-width: 100%;
-            height: auto;
-            max-height: 170px;
+            max-height: 150px;
             object-fit: cover;
         }
 
         .search-container {
             margin: 20px 0;
             text-align: center;
+            width: 100%;
         }
 
         .search-container input {
@@ -132,6 +148,7 @@
             max-width: 300px;
             border: 1px solid #ddd;
             border-radius: 4px;
+            box-sizing: border-box;
         }
 
         .search-container button {
@@ -163,15 +180,11 @@
             text-align: right !important;
         }
 
-        @media (max-width: 768px) {
-            .table td,
-            .table th {
-                padding: 4px;
-                font-size: 11px;
-            }
-
-            .table img {
-                max-height: 120px;
+        /* Mobile scaling */
+        @media (max-width: 1200px) {
+            body {
+                font-size: 14px; /* Scale down fonts */
+                padding: 5px;
             }
 
             h2 {
@@ -183,11 +196,45 @@
             }
 
             .main-container {
+                margin: 10px 5px;
                 padding: 5px;
             }
 
+            .outer-box {
+                padding: 15px;
+            }
+
+            .table th,
+            .table td {
+                padding: 6px;
+                font-size: 12px;
+            }
+
+            .table img {
+                max-height: 100px;
+            }
+
             .search-container input {
-                width: 70%;
+                width: 90%;
+                margin-bottom: 10px;
+            }
+
+            .search-container button {
+                width: 90%;
+                max-width: 300px;
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .search-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .table td.photo-column {
+                max-width: 100px; /* Scale photo column */
             }
         }
     </style>
@@ -200,6 +247,16 @@
     <div id="result"></div>
 
     <script>
+        // Dynamically adjust viewport scale to fit 1200px layout on mobile
+        (function() {
+            const viewport = document.querySelector('meta[name="viewport"]');
+            const screenWidth = window.screen.width;
+            if (screenWidth < 1200) {
+                const scale = screenWidth / 1200;
+                viewport.setAttribute('content', `width=1200, initial-scale=${scale}, maximum-scale=${scale}, user-scalable=no`);
+            }
+        })();
+
         // Sample data
         const studentData = [
             {
@@ -273,8 +330,8 @@
                                 <tr>
                                     <td class="active text-right">Name on Certificate</td>
                                     <td>${student['Name on Certificate'] || ''}</td>
-                                    <td rowspan="5" width="150px">
-                                        <img src="${student['Photo'] || './assets/placeholder.png'}" height="170px" alt="Photo of ${student['Name on Certificate'] || 'test taker'}" loading="lazy">
+                                    <td class="photo-column" rowspan="5">
+                                        <img src="${student['Photo'] || './assets/placeholder.png'}" alt="Photo of ${student['Name on Certificate'] || 'test taker'}" loading="lazy">
                                     </td>
                                 </tr>
                                 <tr>
