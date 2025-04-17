@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>中文考试成绩在线验证结果查询</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -87,6 +86,7 @@
             max-width: 150px;
             max-height: 200px;
             border: 1px solid #ddd;
+            object-fit: cover;
         }
         .chinese-label {
             font-size: 14px;
@@ -108,8 +108,54 @@
     <div id="result"></div>
 
     <script>
+        // Sample data (in a real application, this would come from your server or database)
+        const studentData = [
+            {
+                "Name on Certificate": "JANNOOR SINGH",
+                "Chinese Name": "加诺",
+                "Nationality": "印度",
+                "Gender": "男",
+                "Exam Center": "印度中印学院",
+                "Ticket No.": "H4240594705000097",
+                "Certificate No.": "H4240874703",
+                "Test Type": "HSK四级",
+                "Test Time": "22-Jun-24",
+                "Photo": "/photo/srk.jpg", // Using placeholder for demo
+                "HSK Listening": "65",
+                "HSK Reading": "62",
+                "HSK Writing": "61",
+                "HSK Total": "188",
+                "HSK Status": "合格",
+                "HSKK Level": "中级",
+                "HSKK Speaking": "28",
+                "HSKK Total": "28",
+                "HSKK Status": "不合格"
+            },
+            {
+                "Name on Certificate": "Sajid Ahmad",
+                "Chinese Name": "加诺",
+                "Nationality": "印度",
+                "Gender": "男",
+                "Exam Center": "印度中印学院",
+                "Ticket No.": "H4240594705000099",
+                "Certificate No.": "H4240874704",
+                "Test Type": "HSK四级",
+                "Test Time": "23-Jun-24",
+                "Photo": "/api/placeholder/150/200", // Using placeholder for demo
+                "HSK Listening": "66",
+                "HSK Reading": "63",
+                "HSK Writing": "62",
+                "HSK Total": "189",
+                "HSK Status": "合格",
+                "HSKK Level": "中级",
+                "HSKK Speaking": "29",
+                "HSKK Total": "29",
+                "HSKK Status": "不合格"
+            }
+        ];
+
         function displayStudentInfo(student) {
-            // Generate HTML using student data from Excel
+            // Generate HTML using student data
             const html = `
                 <div class="container">
                     <div class="header">Information of test taker</div>
@@ -133,7 +179,7 @@
                             </div>
                         </div>
                         <div class="info-right">
-                            <img src="${student['Photo'] || 'default_photo.jpg'}" alt="Student Photo" class="photo">
+                            <img src="${student['Photo'] || '/api/placeholder/150/200'}" alt="Student Photo" class="photo">
                         </div>
                     </div>
                     
@@ -202,46 +248,46 @@
             $('#result').html(html);
         }
 
-        function loadFromExcel() {
-            const excelFile = 'student_data.xlsx'; // Ensure this file is in the correct path
-            const urlParams = new URLSearchParams(window.location.search);
-            const ticketNo = urlParams.get('ticket');
-
-            if (!ticketNo) {
-                $('#result').html('<div class="error">No ticket number provided in URL</div>');
+        function searchByCertificateNo(certificateNo) {
+            if (!certificateNo) {
+                $('#result').html('<div class="error">No certificate number provided</div>');
                 return;
             }
 
-            fetch(excelFile)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Failed to load Excel file');
-                    }
-                    return response.arrayBuffer();
-                })
-                .then(data => {
-                    const workbook = XLSX.read(data, { type: 'array' });
-                    const sheetName = workbook.SheetNames[0];
-                    const worksheet = workbook.Sheets[sheetName];
-                    const jsonData = XLSX.utils.sheet_to_json(worksheet);
-
-                    // Find the student by ticket number
-                    const student = jsonData.find(row => row['Ticket No.'] === ticketNo);
-                    if (student) {
-                        displayStudentInfo(student);
-                    } else {
-                        $('#result').html('<div class="error">No student found with ticket number: ' + ticketNo + '</div>');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error loading Excel file:', error);
-                    $('#result').html('<div class="error">Error loading student data. Please try again later.</div>');
-                });
+            // Find the student by certificate number
+            const student = studentData.find(row => row['Certificate No.'] === certificateNo);
+            if (student) {
+                displayStudentInfo(student);
+            } else {
+                $('#result').html('<div class="error">No student found with certificate number: ' + certificateNo + '</div>');
+            }
         }
 
         // When the page loads
         $(document).ready(function() {
-            loadFromExcel();
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // First check for certificate parameter
+            let certificateNo = urlParams.get('cert');
+            
+            // If not found, check for ticket parameter (backward compatibility)
+            if (!certificateNo) {
+                const ticketNo = urlParams.get('ticket');
+                if (ticketNo) {
+                    // Find certificate number by ticket
+                    const student = studentData.find(row => row['Ticket No.'] === ticketNo);
+                    if (student) {
+                        certificateNo = student['Certificate No.'];
+                    }
+                }
+            }
+            
+            // Search by certificate number
+            if (certificateNo) {
+                searchByCertificateNo(certificateNo);
+            } else {
+                $('#result').html('<div class="error">Please provide a certificate number in the URL<br>Example: http://127.0.0.1:5500/index.html?cert=H4240874703</div>');
+            }
         });
     </script>
 </body>
