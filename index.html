@@ -4,74 +4,145 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>中文考试成绩在线验证结果查询</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
             max-width: 1200px;
             margin: 0 auto;
             padding: 10px;
             background-color: #fff;
             color: #333;
+            line-height: 1.5;
         }
-        h2, h4{
+
+        h2, h4 {
             text-align: center;
             margin-bottom: 2px;
             font-weight: 500;
         }
+
         h2 {
             font-size: 30px;
             margin-top: 10px;
         }
+
         h4 {
             font-size: 16px;
             color: #555;
             margin-bottom: 15px;
         }
+
         .main-container {
-            background-color: white;
+            background-color: #fff;
             border: 1px solid #ddd;
             border-radius: 4px;
             padding: 0;
             margin-top: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
+
         .active {
             background-color: #f9f9f9 !important;
+            font-weight: normal;
         }
+
         .text-right {
             text-align: right !important;
         }
+
+        .text-center {
+            text-align: center !important;
+        }
+
         .exam-title {
-            padding: 10px 10px;
+            padding: 10px;
             background-color: #fff;
             font-weight: normal;
             border-bottom: 1px solid #eee;
         }
+
         .footer {
             text-align: center;
             font-size: 12px;
             color: #777;
             margin-top: 20px;
         }
+
         .error {
             color: red;
             text-align: center;
             padding: 20px;
         }
+
         .panel-body {
             padding: 15px;
+            font-weight: normal;
         }
-        .outer-box{
+
+        .outer-box {
             border: 1px solid #ddd;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             padding: 24px;
             border-radius: 6px;
-}
+        }
 
-        
+        /* Custom table styling to mimic Bootstrap's table-bordered */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 0;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            vertical-align: middle;
+        }
+
+        .table th {
+            background-color: #f9f9f9;
+            font-weight: normal;
+            text-align: center;
+        }
+
+        .table tbody tr td {
+            font-size: 14px;
+        }
+
+        .table img {
+            max-height: 170px;
+            width: 150px;
+            object-fit: cover;
+        }
+
+        /* Mimic Bootstrap's mb-0 */
+        .mb-0 {
+            margin-bottom: 0 !important;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .table td,
+            .table th {
+                padding: 6px;
+                font-size: 12px;
+            }
+
+            .table img {
+                width: 100px;
+                height: 120px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            h4 {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -131,86 +202,87 @@
             // Format the exam date
             const testDate = student['Test Time'] || '';
             
-            // Generate HTML using student data with simple Bootstrap table structure
+            // Generate HTML using student data with custom table structure
             const html = `
-             <div class="outer-box">           
-                 <div class="main-container">
-                    <div class="panel-body">
-					Information of test taker 
-				</div>
-                    <table class="table table-bordered mb-0">
-                        <tbody>
-                            <tr>
-                                <td class="active text-right">Name on Certificate</td>
-                                <td>${student['Name on Certificate'] || ''}</td>
-                                <td rowspan="5" width="150px">
-                                    <img src="${student['Photo'] || '/api/placeholder/150/170'}" height="170px">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="active text-right">Chinese Name</td>
-                                <td>${student['Chinese Name'] || ''}</td>
-                            </tr>
-                            <tr>
-                                <td class="active text-right">Nationality</td>
-                                <td>${student['Nationality'] || ''}</td>
-                            </tr>
-                            <tr>
-                                <td class="active text-right">Gender</td>
-                                <td>${student['Gender'] || ''}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="" style="font-size:14px;">考试信息</td>
-                            </tr>
-                            <tr>
-                                <td class="active text-right">考点名称</td>
-                                <td colspan="2">${student['Exam Center'] || ''}</td>
-                            </tr>
-                            <tr>
-                                <td class="active text-right">Ticket No.</td>
-                                <td colspan="2">${student['Ticket No.'] || ''}</td>
-                            </tr>
-                            <tr>
-                                <td class="active text-right">证书编号</td>
-                                <td colspan="2">${student['Certificate No.'] || ''}</td>
-                            </tr>
-                            <tr>
-                                <td class="active text-right">Test Type</td>
-                                <td colspan="2">${student['Test Type'] || ''}</td>
-                            </tr>
-                            <tr>
-                                <td class="active text-right">Test Time</td>
-                                <td colspan="2">${student['Test Time'] || ''}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="outer-box">           
+                    <div class="main-container">
+                        <div class="panel-body">
+                            Information of test taker 
+                        </div>
+                        <table class="table mb-0">
+                            <tbody>
+                                <tr>
+                                    <td class="active text-right">Name on Certificate</td>
+                                    <td>${student['Name on Certificate'] || ''}</td>
+                                    <td rowspan="5" width="150px">
+                                        <img src="${student['Photo'] || '/api/placeholder/150/170'}" height="170px">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active text-right">Chinese Name</td>
+                                    <td>${student['Chinese Name'] || ''}</td>
+                                </tr>
+                                <tr>
+                                    <td class="active text-right">Nationality</td>
+                                    <td>${student['Nationality'] || ''}</td>
+                                </tr>
+                                <tr>
+                                    <td class="active text-right">Gender</td>
+                                    <td>${student['Gender'] || ''}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="font-size:14px;">考试信息</td>
+                                </tr>
+                                <tr>
+                                    <td class="active text-right">考点名称</td>
+                                    <td colspan="2">${student['Exam Center'] || ''}</td>
+                                </tr>
+                                <tr>
+                                    <td class="active text-right">Ticket No.</td>
+                                    <td colspan="2">${student['Ticket No.'] || ''}</td>
+                                </tr>
+                                <tr>
+                                    <td class="active text-right">证书编号</td>
+                                    <td colspan="2">${student['Certificate No.'] || ''}</td>
+                                </tr>
+                                <tr>
+                                    <td class="active text-right">Test Type</td>
+                                    <td colspan="2">${student['Test Type'] || ''}</td>
+                                </tr>
+                                <tr>
+                                    <td class="active text-right">Test Time</td>
+                                    <td colspan="2">${student['Test Time'] || ''}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="main-container">
+                        <div class="exam-title">${student['Test Type'] || 'HSK'}(${testDate})中文水平考试</div>
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">听力</th>
+                                    <th class="text-center">阅读</th>
+                                    <th class="text-center">写作</th>
+                                    <th class="text-center">Total Score</th>
+                                    <th class="text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">${student['HSK Listening'] || ''}</td>
+                                    <td class="text-center">${student['HSK Reading'] || ''}</td>
+                                    <td class="text-center">${student['HSK Writing'] || ''}</td>
+                                    <td class="text-center">${student['HSK Total'] || ''}</td>
+                                    <td class="text-center">${student['HSK Status'] || ''}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="footer">版权和解释权归汉考国际所有</div>
                 </div>
-                
-                <div class="main-container">
-                    <div class="exam-title">${student['Test Type'] || 'HSK'}(${testDate})中文水平考试</div>
-                    <table class="table table-bordered mb-0">
-                        <thead>
-                            <tr>
-                                <th class="text-center">听力</th>
-                                <th class="text-center">阅读</th>
-                                <th class="text-center">写作</th>
-                                <th class="text-center">Total Score</th>
-                                <th class="text-center">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="text-center">${student['HSK Listening'] || ''}</td>
-                                <td class="text-center">${student['HSK Reading'] || ''}</td>
-                                <td class="text-center">${student['HSK Writing'] || ''}</td>
-                                <td class="text-center">${student['HSK Total'] || ''}</td>
-                                <td class="text-center">${student['HSK Status'] || ''}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <div class="footer">版权和解释权归汉考国际所有</div></div>
             `;
             
             $('#result').html(html);
