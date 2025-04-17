@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>中文考试成绩在线验证结果查询</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -36,44 +38,11 @@
             margin-top: 20px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        .header {
-            background-color: #f9f9f9;
-            padding: 10px 15px;
-            font-weight: normal;
-            border-bottom: 1px solid #eee;
-            color: #333;
+        .active {
+            background-color: #f9f9f9 !important;
         }
-        .student-info {
-            display: flex;
-            flex-wrap: wrap;
-        }
-        .info-left {
-            flex: 1;
-            min-width: 70%;
-        }
-        .info-right {
-            flex: 0 0 150px;
-            padding: 10px;
-            text-align: right;
-        }
-        .info-row {
-            display: flex;
-            border-bottom: 1px solid #eee;
-        }
-        .info-label {
-            flex: 0 0 150px;
-            font-weight: normal;
-            padding: 10px 15px;
-            text-align: right;
-            background-color: #fff;
-            color: #666;
-        }
-        .info-value {
-            flex: 1;
-            padding: 10px 15px;
-        }
-        .exam-section {
-            margin-top: 20px;
+        .text-right {
+            text-align: right !important;
         }
         .exam-title {
             padding: 10px 15px;
@@ -81,43 +50,19 @@
             font-weight: normal;
             border-bottom: 1px solid #eee;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 10px 15px;
-            text-align: center;
-            border: 1px solid #eee;
-        }
-        th {
-            background-color: #f9f9f9;
-            font-weight: normal;
-            color: #333;
-        }
         .footer {
             text-align: center;
             font-size: 12px;
             color: #777;
             margin-top: 20px;
         }
-        .photo {
-            max-width: 150px;
-            max-height: 170px;
-            border: 1px solid #eee;
-            object-fit: cover;
-        }
-        .chinese-label {
-            font-size: 14px;
-            color: #666;
-            padding: 10px 15px;
-            background-color: #f9f9f9;
-            border-bottom: 1px solid #eee;
-        }
         .error {
             color: red;
             text-align: center;
             padding: 20px;
+        }
+        .panel-body {
+            padding: 15px;
         }
     </style>
 </head>
@@ -128,7 +73,7 @@
     <div id="result"></div>
 
     <script>
-        // Sample data (in a real application, this would come from your server or database)
+        // Sample data (keeping original data)
         const studentData = [
             {
                 "Name on Certificate": "JANNOOR SINGH",
@@ -140,7 +85,7 @@
                 "Certificate No.": "H4240874703",
                 "Test Type": "HSK四级",
                 "Test Time": "Jun 22, 2024",
-                "Photo": "./photo/srk.png", // Updated for GitHub Pages
+                "Photo": "./photo/srk.png",
                 "HSK Listening": "65",
                 "HSK Reading": "62",
                 "HSK Writing": "61",
@@ -161,7 +106,7 @@
                 "Certificate No.": "H4240874704",
                 "Test Type": "HSK四级",
                 "Test Time": "Jun 23, 2024",
-                "Photo": "./photo/tom.png", // Updated for GitHub Pages
+                "Photo": "./photo/tom.png",
                 "HSK Listening": "66",
                 "HSK Reading": "63",
                 "HSK Writing": "62",
@@ -178,90 +123,101 @@
             // Format the exam date
             const testDate = student['Test Time'] || '';
             
-            // Generate HTML using student data
+            // Generate HTML using student data with simple Bootstrap table structure
             const html = `
                 <div class="main-container">
-                    <div class="header">Information of test taker</div>
-                    <div class="student-info">
-                        <div class="info-left">
-                            <div class="info-row">
-                                <div class="info-label">Name on Certificate</div>
-                                <div class="info-value">${student['Name on Certificate'] || ''}</div>
-                            </div>
-                            <div class="info-row">
-                                <div class="info-label">Chinese Name</div>
-                                <div class="info-value">${student['Chinese Name'] || ''}</div>
-                            </div>
-                            <div class="info-row">
-                                <div class="info-label">Nationality</div>
-                                <div class="info-value">${student['Nationality'] || ''}</div>
-                            </div>
-                            <div class="info-row">
-                                <div class="info-label">Gender</div>
-                                <div class="info-value">${student['Gender'] || ''}</div>
-                            </div>
-                        </div>
-                        <div class="info-right">
-                            <img src="${student['Photo'] || '/api/placeholder/150/170'}" alt="Student Photo" class="photo">
-                        </div>
-                    </div>
-                    
-                    <div class="chinese-label">考试信息</div>
-                    <div class="info-row">
-                        <div class="info-label">考点名称</div>
-                        <div class="info-value">${student['Exam Center'] || ''}</div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-label">Ticket No.</div>
-                        <div class="info-value">${student['Ticket No.'] || ''}</div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-label">证书编号</div>
-                        <div class="info-value">${student['Certificate No.'] || ''}</div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-label">Test Type</div>
-                        <div class="info-value">${student['Test Type'] || ''}</div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-label">Test Time</div>
-                        <div class="info-value">${student['Test Time'] || ''}</div>
-                    </div>
-                </div>
-                
-                <div class="main-container exam-section">
-                    <div class="exam-title">${student['Test Type'] || 'HSK'}(${testDate})中文水平考试</div>
-                    <table>
-                        <tr>
-                            <th>听力</th>
-                            <th>阅读</th>
-                            <th>写作</th>
-                            <th>Total Score</th>
-                            <th>Status</th>
-                        </tr>
-                        <tr>
-                            <td>${student['HSK Listening'] || ''}</td>
-                            <td>${student['HSK Reading'] || ''}</td>
-                            <td>${student['HSK Writing'] || ''}</td>
-                            <td>${student['HSK Total'] || ''}</td>
-                            <td>${student['HSK Status'] || ''}</td>
-                        </tr>
+                    <div class="panel-body">
+					Information of test taker 
+				</div>
+                    <table class="table table-bordered mb-0">
+                        <tbody>
+                            <tr>
+                                <td class="active text-right">Name on Certificate</td>
+                                <td>${student['Name on Certificate'] || ''}</td>
+                                <td rowspan="5" width="150px">
+                                    <img src="${student['Photo'] || '/api/placeholder/150/170'}" height="170px">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="active text-right">Chinese Name</td>
+                                <td>${student['Chinese Name'] || ''}</td>
+                            </tr>
+                            <tr>
+                                <td class="active text-right">Nationality</td>
+                                <td>${student['Nationality'] || ''}</td>
+                            </tr>
+                            <tr>
+                                <td class="active text-right">Gender</td>
+                                <td>${student['Gender'] || ''}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="" style="font-size:14px;">考试信息</td>
+                            </tr>
+                            <tr>
+                                <td class="active text-right">考点名称</td>
+                                <td colspan="2">${student['Exam Center'] || ''}</td>
+                            </tr>
+                            <tr>
+                                <td class="active text-right">Ticket No.</td>
+                                <td colspan="2">${student['Ticket No.'] || ''}</td>
+                            </tr>
+                            <tr>
+                                <td class="active text-right">证书编号</td>
+                                <td colspan="2">${student['Certificate No.'] || ''}</td>
+                            </tr>
+                            <tr>
+                                <td class="active text-right">Test Type</td>
+                                <td colspan="2">${student['Test Type'] || ''}</td>
+                            </tr>
+                            <tr>
+                                <td class="active text-right">Test Time</td>
+                                <td colspan="2">${student['Test Time'] || ''}</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
                 
-                <div class="main-container exam-section">
+                <div class="main-container">
+                    <div class="exam-title">${student['Test Type'] || 'HSK'}(${testDate})中文水平考试</div>
+                    <table class="table table-bordered mb-0">
+                        <thead>
+                            <tr>
+                                <th class="text-center">听力</th>
+                                <th class="text-center">阅读</th>
+                                <th class="text-center">写作</th>
+                                <th class="text-center">Total Score</th>
+                                <th class="text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">${student['HSK Listening'] || ''}</td>
+                                <td class="text-center">${student['HSK Reading'] || ''}</td>
+                                <td class="text-center">${student['HSK Writing'] || ''}</td>
+                                <td class="text-center">${student['HSK Total'] || ''}</td>
+                                <td class="text-center">${student['HSK Status'] || ''}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="main-container">
                     <div class="exam-title">HSKK (${student['HSKK Level'] || '中级'}) (${testDate})中文水平考试</div>
-                    <table>
-                        <tr>
-                            <th>口试</th>
-                            <th>Total Score</th>
-                            <th>Status</th>
-                        </tr>
-                        <tr>
-                            <td>${student['HSKK Speaking'] || ''}</td>
-                            <td>${student['HSKK Total'] || ''}</td>
-                            <td>${student['HSKK Status'] || ''}</td>
-                        </tr>
+                    <table class="table table-bordered mb-0">
+                        <thead>
+                            <tr>
+                                <th class="text-center">口试</th>
+                                <th class="text-center">Total Score</th>
+                                <th class="text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">${student['HSKK Speaking'] || ''}</td>
+                                <td class="text-center">${student['HSKK Total'] || ''}</td>
+                                <td class="text-center">${student['HSKK Status'] || ''}</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
                 
@@ -309,7 +265,8 @@
             if (certificateNo) {
                 searchByCertificateNo(certificateNo);
             } else {
-                $('#result').html('<div class="error">Please provide a certificate number in the URL<br>Example: http://127.0.0.1:5500/index.html?cert=H4240874703</div>');
+                // Display the first student when there's no certificate number
+                displayStudentInfo(studentData[0]);
             }
         });
     </script>
