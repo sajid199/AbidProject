@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>中文考试成绩在线验证结果查询</title>
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/assets/js/jquery.min.js"></script>
     <style>
         body {
             font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
@@ -87,7 +87,6 @@
             border-radius: 6px;
         }
 
-        /* Custom table styling to mimic Bootstrap's table-bordered */
         .table {
             width: 100%;
             border-collapse: collapse;
@@ -117,12 +116,10 @@
             object-fit: cover;
         }
 
-        /* Mimic Bootstrap's mb-0 */
         .mb-0 {
             margin-bottom: 0 !important;
         }
 
-        /* Responsive adjustments */
         @media (max-width: 768px) {
             .table td,
             .table th {
@@ -199,10 +196,7 @@
         ];
         
         function displayStudentInfo(student) {
-            // Format the exam date
             const testDate = student['Test Time'] || '';
-            
-            // Generate HTML using student data with custom table structure
             const html = `
                 <div class="outer-box">           
                     <div class="main-container">
@@ -294,7 +288,6 @@
                 return;
             }
 
-            // Find the student by certificate number
             const student = studentData.find(row => row['Certificate No.'] === certificateNo);
             if (student) {
                 displayStudentInfo(student);
@@ -303,18 +296,14 @@
             }
         }
 
-        // When the page loads
         $(document).ready(function() {
             const urlParams = new URLSearchParams(window.location.search);
             
-            // First check for certificate parameter
             let certificateNo = urlParams.get('cert');
             
-            // If not found, check for ticket parameter (backward compatibility)
             if (!certificateNo) {
                 const ticketNo = urlParams.get('ticket');
                 if (ticketNo) {
-                    // Find certificate number by ticket
                     const student = studentData.find(row => row['Ticket No.'].includes(ticketNo));
                     if (student) {
                         certificateNo = student['Certificate No.'];
@@ -322,11 +311,9 @@
                 }
             }
             
-            // Search by certificate number
             if (certificateNo) {
                 searchByCertificateNo(certificateNo);
             } else {
-                // Display the first student when there's no certificate number
                 displayStudentInfo(studentData[0]);
             }
         });
