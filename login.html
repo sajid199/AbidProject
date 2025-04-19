@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>登录页面</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: url('./photo/bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: flex-end; /* Align to the right */
+      align-items: center;
+    }
+
+    .login-container {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      height: 100%;
+      padding-right: 5%; /* Add some right padding */
+    }
+
+    .login-box {
+      padding: 30px;
+      margin: 107px;
+      width: 400px; /* Reduced width for better responsiveness */
+      border-radius: 10px;
+      color: rgb(14, 13, 13);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-height: 500px; /* Limit max height */
+    }
+
+    .form-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .captcha-login-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .captcha-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .form-row img {
+      width: 48px;
+      height: 48px;
+      margin-right: 5px;
+    }
+
+    .form-row label {
+      width: 60px;
+      font-size: 16px;
+      color: rgb(18, 17, 17);
+    }
+
+    .form-row input[type="text"],
+    .form-row input[type="password"] {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      border: 1px solid #000;
+    }
+
+    .captcha-input {
+      width: 100px;
+    }
+
+    .captcha-img {
+      margin-left: 10px;
+      height: 32px;
+    }
+
+    .forgot-password {
+      margin-left: 10px;
+      font-size: 14px;
+      color: #0000cc;
+      text-decoration: none;
+    }
+
+    .login-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .login-btn img {
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+    }
+
+    .login-btn:hover {
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 768px) {
+      .login-container {
+        justify-content: center;
+        padding-right: 0;
+      }
+
+      .login-box {
+        width: 90%;
+        max-width: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <form>
+        <div class="form-row">
+          <img src="https://admin.chinesetest.cn/css/image/user.gif" alt="user" />
+          <label for="username">用户名:</label>
+          <input type="text" id="username" />
+        </div>
+        <div class="form-row">
+          <img src="https://admin.chinesetest.cn/css/image/lock.gif" alt="lock" />
+          <label for="password">密码:</label>
+          <input type="password" id="password" />
+          <a href="#" class="forgot-password">忘记密码</a>
+        </div>
+        <div class="form-row captcha-login-row">
+          <div class="captcha-container">
+            <img src="https://admin.chinesetest.cn/css/image/number.gif" alt="captcha" />
+            <label for="captcha">验证码:</label>
+            <input type="text" id="captcha" class="captcha-input" />
+            <img class="captcha-img" src="https://dummyimage.com/60x32/ccc/000&text=soap" alt="captcha"/>
+          </div>
+          <button type="submit" class="login-btn"><img style="width: 16px; height: 22px;" src="https://admin.chinesetest.cn/css/image/surw.gif" alt="" >登录</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
