@@ -258,7 +258,6 @@
     <h2>中文考试成绩在线验证结果查询</h2>
     <h4>汉考国际教育科技（北京）有限公司（CTI）</h4>
 
-
     <div id="result"></div>
 
     <script>
@@ -450,6 +449,14 @@
         $(document).ready(function() {
             try {
                 const urlParams = new URLSearchParams(window.location.search);
+                
+                // Check if there are any query parameters
+                if (urlParams.toString() === '') {
+                    // No parameters, redirect to login.html
+                    window.location.href = 'login.html';
+                    return;
+                }
+
                 let certificateNo = urlParams.get('cert');
                 
                 if (!certificateNo) {
