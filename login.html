@@ -132,6 +132,17 @@
       background-color: #0056b3;
     }
 
+    .unauthorized-message {
+      display: none;
+      background-color: #ff4d4f;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+      margin-bottom: 15px;
+      width: 100%;
+    }
+
     @media (max-width: 768px) {
       .login-container {
         justify-content: center;
@@ -156,12 +167,14 @@
                 viewport.setAttribute('content', `width=1200, initial-scale=${scale}, maximum-scale=${scale}, user-scalable=no`);
             }
         })();
-
   </script>
   <!-- <img src="./photo/bg.jpg" alt="background" class="background-img"> -->
   <div class="login-container">
     <div class="login-box">
-      <form>
+      <form id="loginForm">
+        <div class="unauthorized-message" id="unauthorizedMessage">
+          您没有授权登录。请检查您的用户名和密码。
+        </div>
         <div class="form-row">
           <img src="https://admin.chinesetest.cn/css/image/user.gif" alt="user" />
           <label for="username">用户名:</label>
@@ -185,5 +198,25 @@
       </form>
     </div>
   </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent form submission
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const captcha = document.getElementById('captcha').value;
+      const unauthorizedMessage = document.getElementById('unauthorizedMessage');
+
+      // Simulated login check (replace with actual authentication logic)
+      if (username !== 'validuser' || password !== 'validpassword' || captcha !== '1234') {
+        unauthorizedMessage.style.display = 'block';
+      } else {
+        unauthorizedMessage.style.display = 'none';
+        // Proceed with login
+        window.location.href = 'index.html';
+      }
+    });
+  </script>
 </body>
 </html>
