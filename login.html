@@ -10,14 +10,26 @@
       padding: 0;
       height: 100%;
       font-family: Arial, sans-serif;
+      position: relative; /* Ensure body is a positioning context */
     }
-
-    body {
-      background: url('./photo/bg.jpg') no-repeat center center fixed;
-      background-size: cover;
-      display: flex;
-      justify-content: flex-end; /* Align to the right */
-      align-items: center;
+   body{
+    margin-left: 0px;
+    margin-top: 0px;
+    background-image: url(./photo/bg.jpg);
+    background-repeat: repeat-x;
+    background-color: #edf2f8;
+    margin-right: 0px;
+    margin-bottom: 0px;
+   }
+    /* Style for the background image */
+    .background-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Make the image cover the entire area */
+      z-index: -1; /* Place the image behind other content */
     }
 
     .login-container {
@@ -26,11 +38,12 @@
       width: 100%;
       height: 100%;
       padding-right: 5%; /* Add some right padding */
+      position: relative; /* Ensure container is above the background */
     }
 
     .login-box {
       padding: 30px;
-      margin: 107px;
+      margin: 134px;
       width: 400px; /* Reduced width for better responsiveness */
       border-radius: 10px;
       color: rgb(14, 13, 13);
@@ -133,6 +146,19 @@
   </style>
 </head>
 <body>
+  <script>
+      // Dynamically adjust viewport scale to fit 1200px layout on mobile
+      (function() {
+            const viewport = document.querySelector('meta[name="viewport"]');
+            const screenWidth = window.screen.width;
+            if (screenWidth < 1200) {
+                const scale = screenWidth / 1200;
+                viewport.setAttribute('content', `width=1200, initial-scale=${scale}, maximum-scale=${scale}, user-scalable=no`);
+            }
+        })();
+
+  </script>
+  <!-- <img src="./photo/bg.jpg" alt="background" class="background-img"> -->
   <div class="login-container">
     <div class="login-box">
       <form>
