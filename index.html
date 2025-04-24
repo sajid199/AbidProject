@@ -261,13 +261,14 @@
     <div id="result"></div>
 
     <script>
-        // Dynamically adjust viewport scale to fit 1200px layout on mobile
+        // Modified viewport adjustment to allow zooming
         (function() {
             const viewport = document.querySelector('meta[name="viewport"]');
             const screenWidth = window.screen.width;
             if (screenWidth < 1200) {
                 const scale = screenWidth / 1200;
-                viewport.setAttribute('content', `width=1200, initial-scale=${scale}, maximum-scale=${scale}, user-scalable=no`);
+                // Changed user-scalable=no to user-scalable=yes to enable zooming
+                viewport.setAttribute('content', `width=1200, initial-scale=${scale}, maximum-scale=5.0, user-scalable=yes`);
             }
         })();
 
