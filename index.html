@@ -15,8 +15,8 @@
             padding: 0;
             width: 100%;
             min-height: 100vh;
-            overflow-x: hidden; /* Prevent horizontal scrollbar */
-            overflow-y: auto; /* Allow vertical scrolling if needed */
+            overflow-x: hidden;
+            overflow-y: auto;
             box-sizing: border-box;
             font-family: Arial, "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: #fff;
@@ -33,13 +33,13 @@
 
         h2, h4 {
             text-align: center;
-            margin-bottom: 2px;
             font-weight: 500;
+            line-height: .5;
         }
 
         h2 {
             font-size: 30px;
-            margin-top: 10px;
+            margin-top: 30px;
         }
 
         h4 {
@@ -126,7 +126,7 @@
             text-align: center;
         }
 
-        .table tbody tr td {
+        . table tbody tr td {
             font-size: 14px;
         }
 
@@ -171,7 +171,6 @@
             margin-bottom: 0 !important;
         }
 
-        /* RTL support */
         html[dir="rtl"] .text-right {
             text-align: left !important;
         }
@@ -180,10 +179,9 @@
             text-align: right !important;
         }
 
-        /* Mobile scaling */
         @media (max-width: 1200px) {
             body {
-                font-size: 14px; /* Scale down fonts */
+                font-size: 14px;
                 padding: 5px;
             }
 
@@ -196,8 +194,8 @@
             }
 
             .main-container {
-                margin: 10px 5px;
-                padding: 5px;
+                /* margin: 10px 5px;
+                padding: 5px; */
             }
 
             .outer-box {
@@ -234,7 +232,7 @@
             }
 
             .table td.photo-column {
-                max-width: 100px; /* Scale photo column */
+                max-width: 100px;
             }
         }
 
@@ -257,93 +255,134 @@
 <body>
     <h2>中文考试成绩在线验证结果查询</h2>
     <h4>汉考国际教育科技（北京）有限公司（CTI）</h4>
-
     <div id="result"></div>
 
     <script>
-        // Dynamically adjust viewport scale to fit 1200px layout on mobile
+        // Modified viewport adjustment to allow zooming
         (function() {
             const viewport = document.querySelector('meta[name="viewport"]');
             const screenWidth = window.screen.width;
             if (screenWidth < 1200) {
                 const scale = screenWidth / 1200;
-                viewport.setAttribute('content', `width=1200, initial-scale=${scale}, maximum-scale=${scale}, user-scalable=no`);
+                viewport.setAttribute('content', `width=1200, initial-scale=${scale}, maximum-scale=5.0, user-scalable=yes`);
             }
         })();
 
         // Sample data
         const studentData = [
-    {
-        "Name on Certificate": "JANNOOR SINGH",
-        "Chinese Name": "加诺",
-        "Nationality": "印度",
-        "Gender": "男",
-        "Exam Center": "印度中印学院",
-        "Ticket No.": "H4240594705000097 H8240594705000098",
-        "Certificate No.": "H4240874703",
-        "Test Type": "HSK四级",
-        "Test Time": "Jun 22, 2024",
-        "Photo": "./photo/srk.png",
-        "HSK Listening": "65",
-        "HSK Reading": "62",
-        "HSK Writing": "61",
-        "HSK Total": "188",
-        "HSK Status": "合格",
-        "HSKK Level": "中级",
-        "HSKK Speaking": "66",
-        "HSKK Total": "66",
-        "HSKK Status": "合格"
-    },
-    {
-        "Name on Certificate": "Sajid Ahmad",
-        "Chinese Name": "加诺",
-        "Nationality": "印度",
-        "Gender": "男",
-        "Exam Center": "印度中印学院",
-        "Ticket No.": "H4240594705000099 H8240594705000090",
-        "Certificate No.": "H4240874704",
-        "Test Type": "HSK四级",
-        "Test Time": "Jun 23, 2024",
-        "Photo": "./photo/tom.png",
-        "HSK Listening": "66",
-        "HSK Reading": "63",
-        "HSK Writing": "62",
-        "HSK Total": "189",
-        "HSK Status": "合格",
-        "HSKK Level": "中级",
-        "HSKK Speaking": "29",
-        "HSKK Total": "29",
-        "HSKK Status": "不合格"
-    },
-    {
-        "Name on Certificate": "NAGA SANDEEP KALURI",
-        "Chinese Name": "桑狄普",
-        "Nationality": "印度",
-        "Gender": "男",
-        "Exam Center": "尼泊尔L.R.I孔子课堂",
-        "Ticket No.": "H4250594705000085 H8240594705000086",
-        "Certificate No.": "H4250874709",
-        "Test Type": "HSK四级",
-        "Test Time": "APR 12, 2025",
-        "Photo": "./photo/Naga.png",
-        "HSK Listening": "66",
-        "HSK Reading": "72",
-        "HSK Writing": "61",
-        "HSK Total": "199",
-        "HSK Status": "合格",
-        "HSKK Level": "中级",
-        "HSKK Speaking": "61",
-        "HSKK Total": "61",
-        "HSKK Status": "合格"
-    },
-];
+            {
+                "Name on Certificate": "JANNOOR SINGH",
+                "Chinese Name": "加诺",
+                "Nationality": "印度",
+                "Gender": "男",
+                "Exam Center": "印度中印学院",
+                "Ticket No.": "H4240594705000097 H8240594705000098",
+                "Certificate No.": "H4240874703",
+                "Test Type": "HSK四级",
+                "Test Time": "Jun 22, 2024",
+                "Photo": "./photo/srk.png",
+                "HSK Listening": "65",
+                "HSK Reading": "62",
+                "HSK Writing": "61",
+                "HSK Total": "188",
+                "HSK Status": "合格",
+                "HSKK Level": "中级",
+                "HSKK Speaking": "66",
+                "HSKK Total": "66",
+                "HSKK Status": "合格"
+            },
+            {
+                "Name on Certificate": "Sajid Ahmad",
+                "Chinese Name": "加诺",
+                "Nationality": "印度",
+                "Gender": "男",
+                "Exam Center": "印度中印学院",
+                "Ticket No.": "H4240594705000099 H8240594705000090",
+                "Certificate No.": "H4240874704",
+                "Test Type": "HSK四级",
+                "Test Time": "Jun 23, 2024",
+                "Photo": "./photo/tom.png",
+                "HSK Listening": "66",
+                "HSK Reading": "63",
+                "HSK Writing": "62",
+                "HSK Total": "189",
+                "HSK Status": "合格",
+                "HSKK Level": "中级",
+                "HSKK Speaking": "29",
+                "HSKK Total": "29",
+                "HSKK Status": "不合格"
+            },
+            {
+                "Name on Certificate": "NAGA SANDEEP KALURI",
+                "Chinese Name": "桑狄普",
+                "Nationality": "印度",
+                "Gender": "男",
+                "Exam Center": "尼泊尔L.R.I孔子课堂",
+                "Ticket No.": "H42502899705500085 H82502899705500086",
+                "Certificate No.": "H4250874709",
+                "Test Type": "HSK四级",
+                "Test Time": "APR 12, 2025",
+                "Photo": "./photo/sandeep.png",
+                "HSK Listening": "66",
+                "HSK Reading": "72",
+                "HSK Writing": "61",
+                "HSK Total": "199",
+                "HSK Status": "合格",
+                "HSKK Level": "中级",
+                "HSKK Speaking": "61",
+                "HSKK Total": "61",
+                "HSKK Status": "合格"
+            }
+        ];
+
+        // Utility function to generate random values
+        function getDefaultValue(key) {
+            const randomNames = ['张伟', '李娜', '王芳'];
+            const randomNationalities = ['中国', '美国', '日本'];
+            const randomGenders = ['男', '女'];
+            const randomExamCenters = ['北京考试中心', '上海考试中心'];
+            const randomTestTypes = ['HSK四级', 'HSK五级', 'HSK六级'];
+            const randomHSKKLevels = ['初级', '中级', '高级'];
+            const randomStatus = ['合格', '不合格'];
+
+            switch (key) {
+                case 'Name on Certificate': return 'Student_' + Math.floor(Math.random() * 1000);
+                case 'Chinese Name': return randomNames[Math.floor(Math.random() * randomNames.length)];
+                case 'Nationality': return randomNationalities[Math.floor(Math.random() * randomNationalities.length)];
+                case 'Gender': return randomGenders[Math.floor(Math.random() * randomGenders.length)];
+                case 'Exam Center': return randomExamCenters[Math.floor(Math.random() * randomExamCenters.length)];
+                case 'Ticket No.': return 'H' + Math.floor(100000000000 + Math.random() * 900000000000);
+                case 'Certificate No.': return 'H' + Math.floor(1000000000 + Math.random() * 9000000000);
+                case 'Test Type': return randomTestTypes[Math.floor(Math.random() * randomTestTypes.length)];
+                case 'Test Time': return new Date(Date.now() - Math.random() * 10000000000).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+                case 'Photo': return './assets/placeholder.png';
+                case 'HSK Listening': return Math.floor(50 + Math.random() * 50).toString();
+                case 'HSK Reading': return Math.floor(50 + Math.random() * 50).toString();
+                case 'HSK Writing': return Math.floor(50 + Math.random() * 50).toString();
+                case 'HSK Total': return Math.floor(150 + Math.random() * 150).toString();
+                case 'HSK Status': return randomStatus[Math.floor(Math.random() * randomStatus.length)];
+                case 'HSKK Level': return randomHSKKLevels[Math.floor(Math.random() * randomHSKKLevels.length)];
+                case 'HSKK Speaking': return Math.floor(50 + Math.random() * 50).toString();
+                case 'HSKK Total': return Math.floor(50 + Math.random() * 50).toString();
+                case 'HSKK Status': return randomStatus[Math.floor(Math.random() * randomStatus.length)];
+                default: return '';
+            }
+        }
 
         function formatDate(dateStr) {
             try {
                 const date = new Date(dateStr);
-                return date.toISOString().split('T')[0]; // Outputs YYYY-MM-DD
+                return date.toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: '2-digit',
+                    year: 'numeric'
+                }); // Outputs "Apr 12, 2025"
             } catch {
-                return dateStr;
+                return dateStr || new Date().toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: '2-digit',
+                    year: 'numeric'
+                });
             }
         }
 
@@ -353,107 +392,122 @@
                 return;
             }
 
-            const testDate = formatDate(student['Test Time']) || '';
+            // Ensure all required properties exist
+            const requiredKeys = [
+                'Name on Certificate', 'Chinese Name', 'Nationality', 'Gender', 'Exam Center',
+                'Ticket No.', 'Certificate No.', 'Test Type', 'Test Time', 'Photo',
+                'HSK Listening', 'HSK Reading', 'HSK Writing', 'HSK Total', 'HSK Status',
+                'HSKK Level', 'HSKK Speaking', 'HSKK Total', 'HSKK Status'
+            ];
+
+            const completeStudent = { ...student };
+            requiredKeys.forEach(key => {
+                if (!(key in completeStudent) || completeStudent[key] === undefined || completeStudent[key] === null) {
+                    completeStudent[key] = getDefaultValue(key);
+                }
+            });
+
+            const testDate = formatDate(completeStudent['Test Time']);
             const html = `
-             <div class="outer-box">           
-            <div class="main-container">
-                <div class="panel-body">
-                    Information of test taker 
+                <div class="outer-box">           
+                    <div class="main-container">
+                        <div class="panel-body">
+                            Information of test taker 
+                        </div>
+                        <table class="table mb-0">
+                            <tbody>
+                                <tr>
+                                    <td class="active text-right">Name on Certificate</td>
+                                    <td>${completeStudent['Name on Certificate']}</td>
+                                    <td class="photo-column" rowspan="5">
+                                        <img src="${completeStudent['Photo']}" alt="Photo of ${completeStudent['Name on Certificate']}" loading="lazy">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="active text-right">Chinese Name</td>
+                                    <td>${completeStudent['Chinese Name']}</td>
+                                </tr>
+                                <tr>
+                                    <td class="active text-right">Nationality</td>
+                                    <td>${completeStudent['Nationality']}</td>
+                                </tr>
+                                <tr>
+                                    <td class="active text-right">Gender</td>
+                                    <td>${completeStudent['Gender']}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="font-size:14px;">考试信息</td>
+                                </tr>
+                                <tr>
+                                    <td class="active text-right">考点名称</td>
+                                    <td colspan="2">${completeStudent['Exam Center']}</td>
+                                </tr>
+                                <tr>
+                                    <td class="active text-right">Ticket No.</td>
+                                    <td colspan="2">${completeStudent['Ticket No.']}</td>
+                                </tr>
+                                <tr>
+                                    <td class="active text-right">证书编号</td>
+                                    <td colspan="2">${completeStudent['Certificate No.']}</td>
+                                </tr>
+                                <tr>
+                                    <td class="active text-right">Test Type</td>
+                                    <td colspan="2">${completeStudent['Test Type']}</td>
+                                </tr>
+                                <tr>
+                                    <td class="active text-right">Test Time</td>
+                                    <td colspan="2">${testDate}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="main-container">
+                        <div class="exam-title">${completeStudent['Test Type']}(${testDate})中文水平考试</div>
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">听力</th>
+                                    <th class="text-center">阅读</th>
+                                    <th class="text-center">写作</th>
+                                    <th class="text-center">Total Score</th>
+                                    <th class="text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">${completeStudent['HSK Listening']}</td>
+                                    <td class="text-center">${completeStudent['HSK Reading']}</td>
+                                    <td class="text-center">${completeStudent['HSK Writing']}</td>
+                                    <td class="text-center">${completeStudent['HSK Total']}</td>
+                                    <td class="text-center">${completeStudent['HSK Status']}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="main-container">
+                        <div class="exam-title">HSKK(${completeStudent['HSKK Level']})(${testDate})中文水平考试 口试</div>
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">口语</th>
+                                    <th class="text-center">Total Score</th>
+                                    <th class="text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">${completeStudent['HSKK Speaking']}</td>
+                                    <td class="text-center">${completeStudent['HSKK Total']}</td>
+                                    <td class="text-center">${completeStudent['HSKK Status']}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="footer">版权和解释权归汉考国际所有</div>
                 </div>
-                <table class="table mb-0">
-                    <tbody>
-                        <tr>
-                            <td class="active text-right">Name on Certificate</td>
-                            <td>${student['Name on Certificate'] || ''}</td>
-                            <td class="photo-column" rowspan="5">
-                                <img src="${student['Photo'] || './assets/placeholder.png'}" alt="Photo of ${student['Name on Certificate'] || 'test taker'}" loading="lazy">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="active text-right">Chinese Name</td>
-                            <td>${student['Chinese Name'] || ''}</td>
-                        </tr>
-                        <tr>
-                            <td class="active text-right">Nationality</td>
-                            <td>${student['Nationality'] || ''}</td>
-                        </tr>
-                        <tr>
-                            <td class="active text-right">Gender</td>
-                            <td>${student['Gender'] || ''}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="font-size:14px;">考试信息</td>
-                        </tr>
-                        <tr>
-                            <td class="active text-right">考点名称</td>
-                            <td colspan="2">${student['Exam Center'] || ''}</td>
-                        </tr>
-                        <tr>
-                            <td class="active text-right">Ticket No.</td>
-                            <td colspan="2">${student['Ticket No.'] || ''}</td>
-                        </tr>
-                        <tr>
-                            <td class="active text-right">证书编号</td>
-                            <td colspan="2">${student['Certificate No.'] || ''}</td>
-                        </tr>
-                        <tr>
-                            <td class="active text-right">Test Type</td>
-                            <td colspan="2">${student['Test Type'] || ''}</td>
-                        </tr>
-                        <tr>
-                            <td class="active text-right">Test Time</td>
-                            <td colspan="2">${testDate}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="main-container">
-                <div class="exam-title">${student['Test Type'] || 'HSK'}(${testDate})中文水平考试</div>
-                <table class="table mb-0">
-                    <thead>
-                        <tr>
-                            <th class="text-center">听力</th>
-                            <th class="text-center">阅读</th>
-                            <th class="text-center">写作</th>
-                            <th class="text-center">Total Score</th>
-                            <th class="text-center">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="text-center">${student['HSK Listening'] || ''}</td>
-                            <td class="text-center">${student['HSK Reading'] || ''}</td>
-                            <td class="text-center">${student['HSK Writing'] || ''}</td>
-                            <td class="text-center">${student['HSK Total'] || ''}</td>
-                            <td class="text-center">${student['HSK Status'] || ''}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="main-container">
-                <div class="exam-title">HSKK(中级)(Jun 22, 2024)中文水平考试 口试</div>
-                <table class="table mb-0">
-                    <thead>
-                        <tr>
-                            <th class="text-center">口语</th>
-                            <th class="text-center">Total Score</th>
-                            <th class="text-center">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="text-center">${student['HSKK Speaking'] || '66'}</td>
-                            <td class="text-center">66</td>
-                            <td class="text-center">合格</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="footer">版权和解释权归汉考国际所有</div>
-        </div>
             `;
             
             $('#result').html(html);
@@ -491,9 +545,7 @@
             try {
                 const urlParams = new URLSearchParams(window.location.search);
                 
-                // Check if there are any query parameters
                 if (urlParams.toString() === '') {
-                    // No parameters, redirect to login.html
                     window.location.href = 'login.html';
                     return;
                 }
